@@ -49,6 +49,8 @@ module Cucumber
         @namespace = YARD::CodeObjects::Cucumber::CUCUMBER_NAMESPACE
 
         File.dirname(file).split('/').each do |directory|
+          next if directory.empty?
+
           @namespace = @namespace.children.find {|child| child.is_a?(YARD::CodeObjects::Cucumber::FeatureDirectory) && child.name.to_s == directory } ||
             @namespace = YARD::CodeObjects::Cucumber::FeatureDirectory.new(@namespace,directory) {|dir| dir.add_file(directory)}
         end
